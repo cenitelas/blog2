@@ -20,7 +20,7 @@
 
         <div class="col-md-9">
 
-            @include('components.posts-list');
+            @include('components.posts-list')
 
         </div>
 

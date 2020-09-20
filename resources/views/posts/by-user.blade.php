@@ -20,7 +20,7 @@
 
         <div class="col-md-3">
             <div class="mb-3">
-                @include('components.category-list',['categories' => $user->categories()->latest()->get()])
+                @include('components.category-list',['categories' => $user->categories()->where('enable','1')->latest()->get()])
             </div>
         </div>
 

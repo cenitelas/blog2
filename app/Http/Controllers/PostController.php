@@ -13,9 +13,11 @@ class PostController extends Controller
 {
     protected function byModel(Model $model,$view=null){
             $posts = $model->posts()
-                ->crossJoin('categories')
+                ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->where('categories.enable', '=','1')
+                ->select('posts.*')
                 ->latest()
-                ->paginate(5);
+                ->paginate(3);
             $table = $model->getTable();
             $single = Str::singular($table);
         return view($view ?? "posts.by-$single",[
@@ -35,7 +37,9 @@ class PostController extends Controller
     {
 //        $this->authorize('view-any', Post::class);
         $posts = Post::query()
-            ->where('category_id->enable', '1')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->where('categories.enable', '=','1')
+            ->select('posts.*')
             ->latest()
             ->paginate(3);
         return view('posts.index', [
